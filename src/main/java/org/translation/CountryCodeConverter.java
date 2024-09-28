@@ -13,7 +13,6 @@ import java.util.Map;
  */
 public class CountryCodeConverter {
 
-    // TODO Task: pick appropriate instance variable(s) to store the data necessary for this class
     private final Map<String, String> countrymap = new HashMap<>() {
     };
 
@@ -36,7 +35,6 @@ public class CountryCodeConverter {
             List<String> lines = Files.readAllLines(Paths.get(getClass()
                     .getClassLoader().getResource(filename).toURI()));
 
-            // TODO Task: use lines to populate the instance variable(s)
             lines.remove(0);
             for (String line: lines) {
                 String line1 = line.replaceAll("\\(.*?\\)", "");
@@ -57,7 +55,7 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        return code;
+        return this.countrymap.get(code);
     }
 
     /**
@@ -66,8 +64,12 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        // TODO Task: update this code to use an instance variable to return the correct value
-        return country;
+        for (String key : this.countrymap.keySet()) {
+            if (this.countrymap.get(key).equals(country)) {
+                return key;
+            }
+        }
+        return null;
     }
 
     /**
@@ -75,7 +77,6 @@ public class CountryCodeConverter {
      * @return how many countries are included in this code converter.
      */
     public int getNumCountries() {
-        // TODO Task: update this code to use an instance variable to return the correct value
         return this.countrymap.size();
     }
 }
