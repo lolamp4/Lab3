@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,16 @@ public class LanguageCodeConverter {
 
             // TODO Task: use lines to populate the instance variable
             //           tip: you might find it convenient to create an iterator using lines.iterator()
+            lines.remove(0);
+            for (String line : lines) {
+                String[] parts = line.split("\t");
+                if (!parts[0].contains(",")) {
+                    System.out.println(parts[0]);
 
+                }
+                String[] multi = parts[0].split(", ");
+            }
+            System.out.println(langaugeMap);
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -70,6 +80,6 @@ public class LanguageCodeConverter {
      */
     public int getNumLanguages() {
         // TODO Task: update this code to use your instance variable to return the correct value
-        return 0;
+        return this.langaugeMap.size();
     }
 }
