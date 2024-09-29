@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class CountryCodeConverter {
 
-    private final Map<String, String> countrymap = new HashMap<>() {
+    private final Map<String, String> countryMap = new HashMap<>() {
     };
 
     /**
@@ -37,9 +37,8 @@ public class CountryCodeConverter {
 
             lines.remove(0);
             for (String line: lines) {
-                String line1 = line.replaceAll("\\(.*?\\)", "");
-                String[] values = line1.split("[\\t(),]+");
-                this.countrymap.put(values[values.length - 2], values[0]);
+                String[] values = line.split("\\t+");
+                this.countryMap.put(values[values.length - 2], values[0]);
             }
         }
 
@@ -55,7 +54,8 @@ public class CountryCodeConverter {
      * @return the name of the country corresponding to the code
      */
     public String fromCountryCode(String code) {
-        return this.countrymap.get(code);
+        String upperCase = code.toUpperCase();
+        return this.countryMap.get(upperCase);
     }
 
     /**
@@ -64,8 +64,8 @@ public class CountryCodeConverter {
      * @return the 3-letter code of the country
      */
     public String fromCountry(String country) {
-        for (String key : this.countrymap.keySet()) {
-            if (this.countrymap.get(key).equals(country)) {
+        for (String key : this.countryMap.keySet()) {
+            if (this.countryMap.get(key).equals(country)) {
                 return key;
             }
         }
@@ -77,6 +77,6 @@ public class CountryCodeConverter {
      * @return how many countries are included in this code converter.
      */
     public int getNumCountries() {
-        return this.countrymap.size();
+        return this.countryMap.size();
     }
 }
