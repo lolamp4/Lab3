@@ -48,7 +48,6 @@ public class JSONTranslator implements Translator {
                 languageCodes.remove("alpha2");
                 this.translateMap.put(jsonArray.getJSONObject(i).getString("alpha3"), languageCodes);
             }
-            System.out.println(this.translateMap);
 
         }
         catch (IOException | URISyntaxException ex) {
