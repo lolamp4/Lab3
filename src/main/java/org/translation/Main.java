@@ -39,19 +39,16 @@ public class Main {
             if (end.equals(country)) {
                 break;
             }
-            // TODO Task: Once you switch promptForCountry so that it returns the country
-            //            name rather than the 3-letter country code, you will need to
-            //            convert it back to its 3-letter country code when calling promptForLanguage
-            String language = promptForLanguage(translator, country);
+            CountryCodeConverter converter = new CountryCodeConverter();
+
+            String language = promptForLanguage(translator, converter.fromCountry(country));
             if (end.equals(language)) {
                 break;
             }
-            // TODO Task: Once you switch promptForLanguage so that it returns the language
-            //            name rather than the 2-letter language code, you will need to
-            //            convert it back to its 2-letter language code when calling translate.
-            //            Note: you should use the actual names in the message printed below though,
-            //            since the user will see the displayed message.
-            System.out.println(country + " in " + language + " is " + translator.translate(country, language));
+
+            LanguageCodeConverter languageCodeconverter = new LanguageCodeConverter();
+            System.out.println(country + " in " + language + " is " + translator.translate(converter.fromCountry(
+                    country), languageCodeconverter.fromLanguage(language)));
             System.out.println("Press enter to continue or quit to exit.");
             Scanner s = new Scanner(System.in);
             String textTyped = s.nextLine();
@@ -81,8 +78,8 @@ public class Main {
     // Note: CheckStyle is configured so that we don't need javadoc for private methods
     private static String promptForLanguage(Translator translator, String country) {
         List<String> languages = translator.getCountryLanguages(country);
-        LanguageCodeConverter converter = new LanguageCodeConverter();
-        languages.replaceAll(converter::fromLanguageCode);
+        LanguageCodeConverter languageCodeconverter = new LanguageCodeConverter();
+        languages.replaceAll(languageCodeconverter::fromLanguageCode);
         Collections.sort(languages);
         for (String language : languages) {
             System.out.println(language);
